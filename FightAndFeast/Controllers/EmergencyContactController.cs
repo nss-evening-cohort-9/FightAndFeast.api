@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FightAndFeast.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/emergencyContacts")]
     [ApiController]
     public class EmergencyContactController : ControllerBase
     {
@@ -19,7 +19,7 @@ namespace FightAndFeast.Controllers
         }
 
         // GET: api/EmergencyContact/5
-        [HttpGet("{id}", Name = "Get")]
+        [HttpGet("{id}")]
         public string Get(int id)
         {
             return "value";
