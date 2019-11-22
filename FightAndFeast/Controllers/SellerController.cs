@@ -4,25 +4,30 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using FightAndFeast.Models;
+using FightAndFeast.DataAccess;
 
 namespace FightAndFeast.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/sellers")]
     [ApiController]
     public class SellerController : ControllerBase
     {
         // GET: api/Seller
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IEnumerable<Seller> GetSellers()
         {
-            return new string[] { "value1", "value2" };
+            var repo = new SellerRepository();
+            return repo.GetAll();
         }
 
         // GET: api/Seller/5
-        [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
+        [HttpGet("{name}")]
+        public ActionResult<Seller> GetSeller(string name)
         {
-            return "value";
+            var repo = new SellerRepository();
+            return repo.Get(name);
+           
         }
 
         // POST: api/Seller

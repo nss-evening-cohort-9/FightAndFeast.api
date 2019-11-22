@@ -9,7 +9,7 @@ using FightAndFeast.Models;
 
 namespace FightAndFeast.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/products")]
     [ApiController]
     public class ProductController : ControllerBase
     {
@@ -23,6 +23,7 @@ namespace FightAndFeast.Controllers
         }
 
         // GET: api/Product/5
+
         [HttpGet("{productid}")]
         public Product GetProduct(int productId)
         {
