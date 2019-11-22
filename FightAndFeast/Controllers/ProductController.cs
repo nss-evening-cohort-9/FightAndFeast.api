@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using FightAndFeast.DataAccess;
+using FightAndFeast.Models;
 
 namespace FightAndFeast.Controllers
 {
@@ -13,16 +15,20 @@ namespace FightAndFeast.Controllers
     {
         // GET: api/Product
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IEnumerable<Product> GetProducts()
         {
-            return new string[] { "value1", "value2" };
+            var repo = new ProductRepository();
+            var products = repo.GetAll();
+            return products;
         }
 
         // GET: api/Product/5
-        [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
+        [HttpGet("{productid}")]
+        public Product GetProduct(int productId)
         {
-            return "value";
+            var repo = new ProductRepository();
+            var product = repo.Get(productId);
+            return product;
         }
 
         // POST: api/Product
