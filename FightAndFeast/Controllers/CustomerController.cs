@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FightAndFeast.DataAccess;
+using FightAndFeast.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,27 +13,29 @@ namespace FightAndFeast.Controllers
     [ApiController]
     public class CustomerController : ControllerBase
     {
-        // GET: api/Customer
+        // GET: api/customers
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IEnumerable<Customer> GetAll()
         {
-            return new string[] { "value1", "value2" };
+            var repo = new CustomerRepository();
+            return repo.GetAllCustomers();
         }
 
-        // GET: api/Customer/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        // GET: api/customer/1
+        [HttpGet("{customerId}")]
+        public Customer Get(int customerId)
         {
-            return "value";
+            var repo = new CustomerRepository();
+            return repo.GetCustomer(customerId);
         }
 
-        // POST: api/Customer
+        // POST: api/customer
         [HttpPost]
         public void Post([FromBody] string value)
         {
         }
 
-        // PUT: api/Customer/5
+        // PUT: api/customer/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {

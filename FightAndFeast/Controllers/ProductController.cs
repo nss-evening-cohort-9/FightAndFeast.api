@@ -14,7 +14,7 @@ namespace FightAndFeast.Controllers
     [ApiController]
     public class ProductController : ControllerBase
     {
-        // GET: api/Product
+        // GET: api/products
         [HttpGet]
         public IEnumerable<Product> GetProducts()
         {
@@ -23,8 +23,7 @@ namespace FightAndFeast.Controllers
             return products;
         }
 
-        // GET: api/Product/5
-
+        // GET: api/products/5
         [HttpGet("{productid}")]
         public Product GetProduct(int productId)
         {
