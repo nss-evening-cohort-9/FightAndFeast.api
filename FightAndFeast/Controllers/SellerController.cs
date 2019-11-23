@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using FightAndFeast.Models;
 using FightAndFeast.DataAccess;
+using FightAndFeast.Commands;
 
 namespace FightAndFeast.Controllers
 {
@@ -32,8 +33,10 @@ namespace FightAndFeast.Controllers
 
         // POST: api/Seller
         [HttpPost]
-        public void Post([FromBody] string value)
+        public void AddSeller(AddSellerCommand newSeller)
         {
+            var repo = new SellerRepository();
+            repo.AddSeller(newSeller);
         }
 
         // PUT: api/Seller/5
