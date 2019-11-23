@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FightAndFeast.Models;
+using FightAndFeast.Commands;
 using Dapper;
 using System.Data.SqlClient;
 
@@ -42,6 +43,32 @@ namespace FightAndFeast.DataAccess
 
                 return seller;
 
+            }
+        }
+
+        public bool AddSeller(AddSellerCommand newSeller)
+        {
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+
+                var addSeller = @"INSERT INTO [dbo].[Seller]
+	                                ([Name]
+	                                ,[DateCreated])
+                                 output inserted.*
+                                 VALUES
+	                                (@name
+                                    ,@date)";
+
+                var parameters = new
+                {
+                    name = newSeller.Name,
+                    date = DateTime.Now
+
+                };
+
+                var rowsAffected = connection.Execute(addSeller, parameters);
+                return rowsAffected == 1;
             }
         }
     }
