@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using FightAndFeast.Commands;
 using FightAndFeast.Models;
 using System;
 using System.Collections.Generic;
@@ -35,6 +36,29 @@ namespace FightAndFeast.DataAccess
                 };
                 var customer = db.QueryFirst<Customer>(sql, parameters);
                 return customer;
+            }
+        }
+
+        public bool AddCustomer(AddCustomerCommand newCustomer)
+        {
+            using (var db = new SqlConnection(_connectionString))
+            {
+                var sql = @"INSERT INTO [dbo].[Customer]
+                                       ([FirstName]
+                                       ,[LastName]
+                                       ,[DateCreated]
+                                       ,[HasFought]
+                                       ,[Email]
+                                       ,[Phone])
+                                 VALUES
+                                       (@firstName
+                                       ,@lastName
+                                       ,@dateCreated
+                                       ,@hasFought
+                                       ,@email
+                                       ,@phone)";
+                
+                return db.Execute(sql, newCustomer) == 1;
             }
         }
     }
