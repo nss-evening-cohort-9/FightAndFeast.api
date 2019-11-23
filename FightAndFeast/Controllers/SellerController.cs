@@ -14,7 +14,7 @@ namespace FightAndFeast.Controllers
     [ApiController]
     public class SellerController : ControllerBase
     {
-        // GET: api/Seller
+        // GET: api/sellers
         [HttpGet]
         public IEnumerable<Seller> GetSellers()
         {
@@ -22,7 +22,7 @@ namespace FightAndFeast.Controllers
             return repo.GetAll();
         }
 
-        // GET: api/Seller/5
+        // GET: api/sellers/5
         [HttpGet("{name}")]
         public ActionResult<Seller> GetSeller(string name)
         {
