@@ -41,7 +41,7 @@ namespace FightAndFeast.DataAccess
         }
 
 
-        public Product Add(Product newProduct)
+        public bool AddProduct(AddProductCommand newProduct)
         {
             
             using (var db = new SqlConnection(_connectionString))
@@ -50,19 +50,17 @@ namespace FightAndFeast.DataAccess
                  
                 var sql = @"Insert INTO [Product]
                                            ([Name]
-                                            ,[TypeId]
                                             ,[Price]
                                             ,[Description])
                                           output inserted.*
                                           VALUES
                                                   (@name
-                                                   ,@typeid
                                                    ,@price
                                                    ,@description)";
 
 
-                return db.QueryFirst<Product>(sql, newProduct);
-                
+                return db.Execute(sql, newProduct) == 1;
+
             }
 
            

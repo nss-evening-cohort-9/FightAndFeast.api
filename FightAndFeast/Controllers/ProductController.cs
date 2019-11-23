@@ -34,26 +34,13 @@ namespace FightAndFeast.Controllers
 
         // POST: api/Product
         [HttpPost]
-        public IActionResult CreateProduct(AddProductCommand newProductCommand)
+        public void AddProduct(AddProductCommand newProduct)
         {
-            var newProduct = new Product
-            {
-                Id = 1,
-                Name = newProductCommand.Name,
-                TypeId = newProductCommand.TypeId,
-                Price = newProductCommand.Price,
-                Description = newProductCommand.Description
-            };
-
             var repo = new ProductRepository();
-            var productThatGotCreated = repo.Add(newProduct);
-
-            return Created($"api/products/{productThatGotCreated.Name}", productThatGotCreated);
-
-
-
+            repo.AddProduct(newProduct);
         }
-        
+
+
 
         // PUT: api/Product/5
         [HttpPut("{id}")]
