@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using FightAndFeast.DataAccess;
 using FightAndFeast.Models;
+using FightAndFeast.Commands;
 
 namespace FightAndFeast.Controllers
 {
@@ -33,9 +34,13 @@ namespace FightAndFeast.Controllers
 
         // POST: api/Product
         [HttpPost]
-        public void Post([FromBody] string value)
+        public void AddProduct(AddProductCommand newProduct)
         {
+            var repo = new ProductRepository();
+            repo.AddProduct(newProduct);
         }
+
+
 
         // PUT: api/Product/5
         [HttpPut("{id}")]
