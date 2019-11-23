@@ -61,5 +61,36 @@ namespace FightAndFeast.DataAccess
                 return db.Execute(sql, newCustomer) == 1;
             }
         }
+
+        public bool UpdateCustomer(Customer customerToUpdate, int id)
+        {
+            using (var db = new SqlConnection(_connectionString))
+            {
+                var sql = @"UPDATE [dbo].[Customer]
+                               SET [FirstName] = @firstName
+                                  ,[LastName] = @lastName
+                                  ,[HasFought] = @hasFought
+                                  ,[Email] = @email
+                                  ,[Phone] = @phone
+                             WHERE Id = @id";
+                customerToUpdate.Id = id;
+                return db.Execute(sql, customerToUpdate) == 1;
+            }
+        }
+
+        public bool DeleteCustomer(Customer customerToDelete, int id)
+        {
+            using (var db = new SqlConnection(_connectionString))
+            {
+                var sql = @"UPDATE [dbo].[Customer]
+                               SET [FirstName] = NULL
+                                  ,[LastName] = NULL
+                                  ,[Email] = NULL
+                                  ,[Phone] = NULL
+                             WHERE Id = @id";
+                customerToDelete.Id = id;
+                return db.Execute(sql, customerToDelete) == 1;
+            }
+        }
     }
 }
