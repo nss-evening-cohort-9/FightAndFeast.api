@@ -41,6 +41,33 @@ namespace FightAndFeast.DataAccess
         }
 
 
-          }
+        public Product Add(Product newProduct)
+        {
+            
+            using (var db = new SqlConnection(_connectionString))
+            {
+                
+                 
+                var sql = @"Insert INTO [Product]
+                                           ([Name]
+                                            ,[TypeId]
+                                            ,[Price]
+                                            ,[Description])
+                                          output inserted.*
+                                          VALUES
+                                                  (@name
+                                                   ,@typeid
+                                                   ,@price
+                                                   ,@description)";
+
+
+                return db.QueryFirst<Product>(sql, newProduct);
+                
+            }
+
+           
+        }
+
     }
+}
 

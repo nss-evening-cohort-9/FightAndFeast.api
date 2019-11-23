@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using FightAndFeast.DataAccess;
 using FightAndFeast.Models;
+using FightAndFeast.Commands;
 
 namespace FightAndFeast.Controllers
 {
@@ -34,9 +35,26 @@ namespace FightAndFeast.Controllers
 
         // POST: api/Product
         [HttpPost]
-        public void Post([FromBody] string value)
+        public IActionResult CreateProduct(AddProductCommand newProductCommand)
         {
+            var newProduct = new Product
+            {
+                Id = 1,
+                Name = newProductCommand.Name,
+                TypeId = newProductCommand.TypeId,
+                Price = newProductCommand.Price,
+                Description = newProductCommand.Description
+            };
+
+            var repo = new ProductRepository();
+            var productThatGotCreated = repo.Add(newProduct);
+
+            return Created($"api/products/{productThatGotCreated.Name}", productThatGotCreated);
+
+
+
         }
+        
 
         // PUT: api/Product/5
         [HttpPut("{id}")]
