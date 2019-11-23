@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FightAndFeast.Commands;
 using FightAndFeast.DataAccess;
 using FightAndFeast.Models;
 using Microsoft.AspNetCore.Http;
@@ -21,7 +22,7 @@ namespace FightAndFeast.Controllers
             return repo.GetAllCustomers();
         }
 
-        // GET: api/customer/1
+        // GET: api/customers/1
         [HttpGet("{customerId}")]
         public Customer Get(int customerId)
         {
@@ -31,8 +32,10 @@ namespace FightAndFeast.Controllers
 
         // POST: api/customer
         [HttpPost]
-        public void Post([FromBody] string value)
+        public void Create(AddCustomerCommand newCustomer)
         {
+            var repo = new CustomerRepository();
+            repo.AddCustomer(newCustomer);
         }
 
         // PUT: api/customer/5
