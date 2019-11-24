@@ -30,7 +30,7 @@ namespace FightAndFeast.Controllers
             return repo.GetCustomer(customerId);
         }
 
-        // POST: api/customer
+        // POST: api/customers
         [HttpPost]
         public void Create(AddCustomerCommand newCustomer)
         {
@@ -38,16 +38,35 @@ namespace FightAndFeast.Controllers
             repo.AddCustomer(newCustomer);
         }
 
-        // PUT: api/customer/5
+        // PUT: api/customers/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public void Update(UpdateCustomerCommand updatedCustomerCommand, int id)
         {
+            var repo = new CustomerRepository();
+            var updatedCustomer = new Customer
+            {
+                FirstName = updatedCustomerCommand.FirstName,
+                LastName = updatedCustomerCommand.LastName,
+                HasFought = updatedCustomerCommand.HasFought,
+                Email = updatedCustomerCommand.Email,
+                Phone = updatedCustomerCommand.Phone,
+            };
+            repo.UpdateCustomer(updatedCustomer, id);
         }
 
-        // DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        // DELETE: api/customers/delete/5
+        [HttpPut("delete/{id}")]
+        public void Delete(UpdateCustomerCommand updatedCustomerCommand, int id)
         {
+            var repo = new CustomerRepository();
+            var updatedCustomer = new Customer
+            {
+                FirstName = updatedCustomerCommand.FirstName,
+                LastName = updatedCustomerCommand.LastName,
+                Email = updatedCustomerCommand.Email,
+                Phone = updatedCustomerCommand.Phone,
+            };
+            repo.DeleteCustomer(updatedCustomer, id);
         }
     }
 }
