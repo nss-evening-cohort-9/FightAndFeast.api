@@ -38,7 +38,7 @@ namespace FightAndFeast.Controllers
             repo.AddCustomer(newCustomer);
         }
 
-        // PUT: api/customers/5
+        // DELETE: api/customers/5
         [HttpPut("{id}")]
         public void Update(UpdateCustomerCommand updatedCustomerCommand, int id)
         {
@@ -54,8 +54,8 @@ namespace FightAndFeast.Controllers
             repo.UpdateCustomer(updatedCustomer, id);
         }
 
-        // DELETE: api/customers/delete/5
-        [HttpPut("delete/{id}")]
+        // DELETE: api/customers/5
+        [HttpDelete("{id}")]
         public void Delete(UpdateCustomerCommand updatedCustomerCommand, int id)
         {
             var repo = new CustomerRepository();

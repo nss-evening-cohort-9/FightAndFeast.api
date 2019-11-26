@@ -7,5 +7,8 @@ namespace FightAndFeast.Commands
 {
     public class UpdateOrderCommand
     {
+        public int CustomerId { get; set; }
+        public decimal Total { get; set; }
+        public int CustomerPaymentTypeId { get; set; }
     }
 }
