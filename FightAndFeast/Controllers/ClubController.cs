@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using FightAndFeast.Models;
 using FightAndFeast.DataAccess;
-using FightAndFeast.Controllers;
+using FightAndFeast.Commands;
 
 namespace FightAndFeast.Controllers
 {
@@ -28,17 +28,29 @@ namespace FightAndFeast.Controllers
             var repo = new ClubRepository();
             return repo.GetClub(name);
         }
-
-        // POST: api/Club
+        
         [HttpPost]
-        public void Post([FromBody] string value)
+        public void AddClub(AddClubCommand newClub)
         {
+            var repo = new ClubRepository();
+            repo.AddClub(newClub);
         }
-
-        // PUT: api/Club/5
+                
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public void UpdateClub(UpdateClubCommand updatedClubCommand, int id)
         {
+            var repo = new ClubRepository();
+
+            var updatedClub = new Club
+            {
+                Name = updatedClubCommand.Name,
+                Address = updatedClubCommand.Address,
+                Phone = updatedClubCommand.Phone,
+                Capacity = updatedClubCommand.Capacity,
+                Description = updatedClubCommand.Description
+            };
+
+            repo.UpdateClub(updatedClub, id);
         }
 
         // DELETE: api/ApiWithActions/5

@@ -44,5 +44,58 @@ namespace FightAndFeast.DataAccess
             }
         }
 
+        public bool AddClub(AddClubCommand newClub)
+        {
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+
+                var addClub = @"INSERT INTO [dbo].[Club]
+	                                ([Name]
+	                                ,[Address]
+	                                ,[Phone]
+	                                ,[Capacity]
+	                                ,[Description])
+                                 output inserted.*
+                                 VALUES
+	                                (@name
+                                    ,@address
+                                    ,@phone
+                                    ,@capacity
+                                    ,@description)";
+
+                var parameters = new
+                {
+                    name = newClub.Name,
+                    address = newClub.Address,
+                    phone = newClub.Phone,
+                    capacity = newClub.Capacity,
+                    description = newClub.Description
+                };
+
+                var rowsAffected = connection.Execute(addClub, parameters);
+                return rowsAffected == 1;
+            }
+        }
+
+        public bool UpdateClub(Club clubToUpdate, int id)
+        {
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+
+                var sql = @"UPDATE [dbo].[Club]
+	                            SET [Name] = @name
+                                    ,[Address] = @address
+	                                ,[Phone] = @phone
+	                                ,[Capacity] = @capacity
+	                                ,[Description] = @description
+	                        WHERE [Id] = @id";
+
+                clubToUpdate.Id = id;
+
+                return connection.Execute(sql, clubToUpdate) == 1;
+            }
+        }
     }
 }
