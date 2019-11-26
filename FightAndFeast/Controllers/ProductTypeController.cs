@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FightAndFeast.Commands;
+using FightAndFeast.DataAccess;
+using FightAndFeast.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,36 +14,52 @@ namespace FightAndFeast.Controllers
     [ApiController]
     public class ProductTypeController : ControllerBase
     {
-        // GET: api/ProductType
+        // GET: api/productTypes
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IEnumerable<ProductType> GetAll()
         {
-            return new string[] { "value1", "value2" };
+            var repo = new ProductTypeRepository();
+            return repo.GetAllProductTypes();
         }
 
-        // GET: api/ProductType/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        // GET: api/productTypes/1
+        [HttpGet("{productTypeId}")]
+        public ProductType Get(int productTypeId)
         {
-            return "value";
+            var repo = new ProductTypeRepository();
+            return repo.GetProductType(productTypeId);
         }
 
-        // POST: api/ProductType
+        // POST: api/productTypes
         [HttpPost]
-        public void Post([FromBody] string value)
+        public void Create(AddProductTypeCommand newProductType)
         {
+            var repo = new ProductTypeRepository();
+            repo.AddProductType(newProductType);
         }
 
-        // PUT: api/ProductType/5
+        // PUT: api/productTypes/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public void Update(UpdateProductTypeCommand updatedProductTypeCommand, int id)
         {
+            var repo = new ProductTypeRepository();
+            var updatedProductType = new ProductType
+            {
+                Name = updatedProductTypeCommand.Name,
+            };
+            repo.UpdateProductType(updatedProductType, id);
         }
 
-        // DELETE: api/ApiWithActions/5
+        // DELETE: api/productTypes/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public void Delete(UpdateProductTypeCommand updatedProductTypeCommand, int id)
         {
+            var repo = new ProductTypeRepository();
+            var updatedProductType = new ProductType
+            {
+                Name = updatedProductTypeCommand.Name,
+            };
+            repo.DeleteProductType(updatedProductType, id);
         }
     }
 }
