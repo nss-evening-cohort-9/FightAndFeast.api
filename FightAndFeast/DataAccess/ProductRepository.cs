@@ -23,8 +23,8 @@ namespace FightAndFeast.DataAccess
                 return products;
             }
         }
-    
-    public Product Get( int productId)
+
+        public Product Get(int productId)
         {
             using (var db = new SqlConnection(_connectionString))
             {
@@ -32,7 +32,7 @@ namespace FightAndFeast.DataAccess
                            from Product
                             where Id =@ProductId";
                 var parameters = new
-                { 
+                {
                     ProductId = productId
                 };
                 var product = db.QueryFirst<Product>(sql, parameters);
@@ -43,11 +43,11 @@ namespace FightAndFeast.DataAccess
 
         public bool AddProduct(AddProductCommand newProduct)
         {
-            
+
             using (var db = new SqlConnection(_connectionString))
             {
-                
-                 
+
+
                 var sql = @"Insert INTO [Product]
                                            ([Name]
                                             ,[Price]
@@ -63,9 +63,51 @@ namespace FightAndFeast.DataAccess
 
             }
 
-           
+
         }
 
+        public bool DeleteProduct(Product productToDelete, int id)
+        {
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+
+                var sql = @"UPDATE[dbo].[Product]
+                                   SET [Name]= null
+                                        ,[TypeId] = null  
+                                       ,[Price] = null 
+                                       ,[Description] = null
+                                       WHERE [Id] = @id";
+                productToDelete.Id = id;
+
+                return connection.Execute(sql, productToDelete) == 1;
+
+
+
+            }
+        }
+
+        public bool UpdateProduct(Product ProductToUpdate, int id)
+        {
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+
+                var sql = @"update [dbo].[Product]
+                                    SET [Name] = @name,
+                                        [TypeId] = @typeid,
+                                        [Price] = @Price,
+                                        [Description] = @description
+                               WHERE [id] = @id";
+
+                ProductToUpdate.Id = id;
+
+                return connection.Execute(sql, ProductToUpdate) == 1;
+
+            }
+        }
     }
+
 }
+
 
