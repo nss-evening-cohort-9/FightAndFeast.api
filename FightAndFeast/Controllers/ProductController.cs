@@ -32,7 +32,7 @@ namespace FightAndFeast.Controllers
             return product;
         }
 
-        // POST: api/Product
+        // POST: api/products/5
         [HttpPost]
         public void AddProduct(AddProductCommand newProduct)
         {
@@ -60,7 +60,7 @@ namespace FightAndFeast.Controllers
 
         }
 
-        // DELETE: api/ApiWithActions/5
+        // DELETE: api//products/5
         [HttpDelete("{id}")]
         public void DeleteProduct(UpdateProductCommand updatedProductCommand, int id)
         {
