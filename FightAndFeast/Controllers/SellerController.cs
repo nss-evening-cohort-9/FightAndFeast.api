@@ -41,8 +41,16 @@ namespace FightAndFeast.Controllers
 
         // PUT: api/Seller/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public void UpdateSeller(UpdateSellerCommand updatedSellerCommand, int id)
         {
+            var repo = new SellerRepository();
+
+            var updatedSeller = new Seller
+            {
+                Name = updatedSellerCommand.Name
+            };
+
+            repo.UpdateSeller(updatedSeller, id);
         }
 
         // DELETE: api/ApiWithActions/5

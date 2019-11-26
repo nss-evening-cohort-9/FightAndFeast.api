@@ -81,11 +81,28 @@ namespace FightAndFeast.DataAccess
                 var sql = @"UPDATE [dbo].[Seller]
 	                        SET [Name] = null
                           WHERE [Id] = @id";
+
                 sellerToDelete.Id = id;
 
                 return connection.Execute(sql, sellerToDelete) == 1;
             }
 
+        }
+
+        public bool UpdateSeller(Seller sellerToUpdate, int id)
+        {
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+
+                var sql = @"UPDATE [dbo].[Seller]
+	                            SET [Name] = @name
+	                        WHERE [Id] = @id";
+
+                sellerToUpdate.Id = id;
+
+                return connection.Execute(sql, sellerToUpdate) == 1;
+            }
         }
     }
 }
