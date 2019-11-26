@@ -47,8 +47,16 @@ namespace FightAndFeast.Controllers
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public void DeleteSeller(UpdateSellerCommand updatedSellerCommand, int id)
         {
+            var repo = new SellerRepository();
+
+            var deletedSeller = new Seller
+            {
+                Name = updatedSellerCommand.Name
+            };
+
+            repo.DeleteSeller(deletedSeller, id);
         }
     }
 }
