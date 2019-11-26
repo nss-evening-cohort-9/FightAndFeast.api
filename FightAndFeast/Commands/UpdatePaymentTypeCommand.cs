@@ -7,5 +7,6 @@ namespace FightAndFeast.Commands
 {
     public class UpdatePaymentTypeCommand
     {
+        public string Name { get; set; }
     }
 }
