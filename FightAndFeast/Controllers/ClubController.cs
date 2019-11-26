@@ -4,25 +4,29 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using FightAndFeast.Models;
+using FightAndFeast.DataAccess;
+using FightAndFeast.Controllers;
 
 namespace FightAndFeast.Controllers
 {
     [Route("api/clubs")]
     [ApiController]
     public class ClubController : ControllerBase
-    {
-        // GET: api/Club
+    {        
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IEnumerable<Club> GetClubs()
         {
-            return new string[] { "value1", "value2" };
-        }
+            var repo = new ClubRepository();
+            return repo.GetAll();
 
-        // GET: api/Club/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        }
+                
+        [HttpGet("{name}")]
+        public ActionResult<Club> GetClub(string name)
         {
-            return "value";
+            var repo = new ClubRepository();
+            return repo.GetClub(name);
         }
 
         // POST: api/Club
