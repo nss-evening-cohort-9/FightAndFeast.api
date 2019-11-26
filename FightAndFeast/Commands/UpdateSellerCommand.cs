@@ -7,5 +7,6 @@ namespace FightAndFeast.Commands
 {
     public class UpdateSellerCommand
     {
+        public string Name { get; set; }
     }
 }

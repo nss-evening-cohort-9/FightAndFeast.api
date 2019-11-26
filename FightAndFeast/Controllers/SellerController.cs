@@ -13,16 +13,14 @@ namespace FightAndFeast.Controllers
     [Route("api/sellers")]
     [ApiController]
     public class SellerController : ControllerBase
-    {
-        // GET: api/sellers
+    {       
         [HttpGet]
         public IEnumerable<Seller> GetSellers()
         {
             var repo = new SellerRepository();
             return repo.GetAll();
         }
-
-        // GET: api/sellers/5
+       
         [HttpGet("{name}")]
         public ActionResult<Seller> GetSeller(string name)
         {
@@ -30,25 +28,38 @@ namespace FightAndFeast.Controllers
             return repo.Get(name);
            
         }
-
-        // POST: api/Seller
+        
         [HttpPost]
         public void AddSeller(AddSellerCommand newSeller)
         {
             var repo = new SellerRepository();
             repo.AddSeller(newSeller);
         }
-
-        // PUT: api/Seller/5
+        
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public void UpdateSeller(UpdateSellerCommand updatedSellerCommand, int id)
         {
-        }
+            var repo = new SellerRepository();
 
-        // DELETE: api/ApiWithActions/5
+            var updatedSeller = new Seller
+            {
+                Name = updatedSellerCommand.Name
+            };
+
+            repo.UpdateSeller(updatedSeller, id);
+        }
+        
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public void DeleteSeller(UpdateSellerCommand updatedSellerCommand, int id)
         {
+            var repo = new SellerRepository();
+
+            var deletedSeller = new Seller
+            {
+                Name = updatedSellerCommand.Name
+            };
+
+            repo.DeleteSeller(deletedSeller, id);
         }
     }
 }
