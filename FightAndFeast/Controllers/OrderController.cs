@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FightAndFeast.Commands;
+using FightAndFeast.DataAccess;
+using FightAndFeast.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,36 +14,54 @@ namespace FightAndFeast.Controllers
     [ApiController]
     public class OrderController : ControllerBase
     {
-        // GET: api/Order
+        // GET: api/orders
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IEnumerable<Order> GetAll()
         {
-            return new string[] { "value1", "value2" };
+            var repo = new OrderRepository();
+            return repo.GetAllOrders();
         }
 
-        // GET: api/Order/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        // GET: api/orders/1
+        [HttpGet("{orderId}")]
+        public Order Get(int orderId)
         {
-            return "value";
+            var repo = new OrderRepository();
+            return repo.GetOrder(orderId);
         }
 
-        // POST: api/Order
+        // POST: api/orders
         [HttpPost]
-        public void Post([FromBody] string value)
+        public void Create(AddOrderCommand newOrder)
         {
+            var repo = new OrderRepository();
+            repo.AddOrder(newOrder);
         }
 
-        // PUT: api/Order/5
+        // PUT: api/orders/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public void Update(UpdateOrderCommand updatedOrderCommand, int id)
         {
+            var repo = new OrderRepository();
+            var updatedOrder = new Order
+            {
+                CustomerId = updatedOrderCommand.CustomerId,
+                Total = updatedOrderCommand.Total,
+                CustomerPaymentTypeId = updatedOrderCommand.CustomerPaymentTypeId,
+            };
+            repo.UpdateOrder(updatedOrder, id);
         }
 
-        // DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        // DELETE: api/orders/delete/5
+        [HttpPut("delete/{id}")]
+        public void Delete(UpdateOrderCommand updatedOrderCommand, int id)
         {
+            var repo = new OrderRepository();
+            var updatedOrder = new Order
+            {
+                CustomerPaymentTypeId = updatedOrderCommand.CustomerPaymentTypeId,
+            };
+            repo.DeleteOrder(updatedOrder, id);
         }
     }
 }
