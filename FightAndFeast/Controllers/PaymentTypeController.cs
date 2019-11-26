@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FightAndFeast.Commands;
+using FightAndFeast.DataAccess;
+using FightAndFeast.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,36 +14,52 @@ namespace FightAndFeast.Controllers
     [ApiController]
     public class PaymentTypeController : ControllerBase
     {
-        // GET: api/PaymentType
+        // GET: api/paymentTypes
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IEnumerable<PaymentType> GetAll()
         {
-            return new string[] { "value1", "value2" };
+            var repo = new PaymentTypeRepository();
+            return repo.GetAllPaymentTypes();
         }
 
-        // GET: api/PaymentType/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        // GET: api/paymentTypes/1
+        [HttpGet("{paymentTypeId}")]
+        public PaymentType Get(int paymentTypeId)
         {
-            return "value";
+            var repo = new PaymentTypeRepository();
+            return repo.GetPaymentType(paymentTypeId);
         }
 
-        // POST: api/PaymentType
+        // POST: api/paymentTypes
         [HttpPost]
-        public void Post([FromBody] string value)
+        public void Create(AddPaymentTypeCommand newPaymentType)
         {
+            var repo = new PaymentTypeRepository();
+            repo.AddPaymentType(newPaymentType);
         }
 
-        // PUT: api/PaymentType/5
+        // PUT: api/paymentTypes/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public void Update(UpdatePaymentTypeCommand updatedPaymentTypeCommand, int id)
         {
+            var repo = new PaymentTypeRepository();
+            var updatedPaymentType = new PaymentType
+            {
+                Name = updatedPaymentTypeCommand.Name,
+            };
+            repo.UpdatePaymentType(updatedPaymentType, id);
         }
 
-        // DELETE: api/ApiWithActions/5
+        // DELETE: api/paymentTypes/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public void Delete(UpdatePaymentTypeCommand updatedPaymentTypeCommand, int id)
         {
+            var repo = new PaymentTypeRepository();
+            var updatedPaymentType = new PaymentType
+            {
+                Name = updatedPaymentTypeCommand.Name,
+            };
+            repo.DeletePaymentType(updatedPaymentType, id);
         }
     }
 }
