@@ -52,8 +52,8 @@ namespace FightAndFeast.Controllers
             repo.UpdateOrder(updatedOrder, id);
         }
 
-        // DELETE: api/orders/delete/5
-        [HttpPut("delete/{id}")]
+        // DELETE: api/orders/5
+        [HttpDelete("{id}")]
         public void Delete(UpdateOrderCommand updatedOrderCommand, int id)
         {
             var repo = new OrderRepository();
