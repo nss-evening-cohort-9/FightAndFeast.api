@@ -7,5 +7,7 @@ namespace FightAndFeast.Commands
 {
     public class AddInsuranceCommand
     {
+        public string Provider { get; set; }
+        public int TypeId { get; set; }
     }
 }

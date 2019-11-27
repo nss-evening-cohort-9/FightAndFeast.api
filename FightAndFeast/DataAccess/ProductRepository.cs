@@ -12,7 +12,7 @@ namespace FightAndFeast.DataAccess
     public class ProductRepository
     {
         string _connectionString = "Server=localhost;Database=FightandFeast;Trusted_Connection=True;";
-        public IEnumerable<Product> GetAll()
+        public IEnumerable<Product> GetAllProducts()
         {
             using (var db = new SqlConnection(_connectionString))
             {
@@ -24,7 +24,7 @@ namespace FightAndFeast.DataAccess
             }
         }
 
-        public Product Get(int productId)
+        public Product GetProduct(int productId)
         {
             using (var db = new SqlConnection(_connectionString))
             {
@@ -40,14 +40,11 @@ namespace FightAndFeast.DataAccess
             }
         }
 
-
         public bool AddProduct(AddProductCommand newProduct)
         {
 
             using (var db = new SqlConnection(_connectionString))
             {
-
-
                 var sql = @"Insert INTO [Product]
                                            ([Name]
                                             ,[Price]
@@ -58,12 +55,8 @@ namespace FightAndFeast.DataAccess
                                                    ,@price
                                                    ,@description)";
 
-
                 return db.Execute(sql, newProduct) == 1;
-
             }
-
-
         }
 
         public bool DeleteProduct(Product productToDelete, int id)
@@ -81,9 +74,6 @@ namespace FightAndFeast.DataAccess
                 productToDelete.Id = id;
 
                 return connection.Execute(sql, productToDelete) == 1;
-
-
-
             }
         }
 

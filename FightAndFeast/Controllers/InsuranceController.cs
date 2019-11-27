@@ -2,45 +2,66 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FightAndFeast.Commands;
+using FightAndFeast.DataAccess;
+using FightAndFeast.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FightAndFeast.Controllers
 {
-    [Route("api/insurances")]
+    [Route("api/insurance")]
     [ApiController]
     public class InsuranceController : ControllerBase
     {
-        // GET: api/Insurance
+        // GET: api/insurance
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IEnumerable<Insurance> GetAll()
         {
-            return new string[] { "value1", "value2" };
+            var repo = new InsuranceRepository();
+            return repo.GetAllInsurance();
         }
 
-        // GET: api/Insurance/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        // GET: api/insurance/1
+        [HttpGet("{insuranceId}")]
+        public Insurance Get(int insuranceId)
         {
-            return "value";
+            var repo = new InsuranceRepository();
+            return repo.GetInsurance(insuranceId);
         }
 
-        // POST: api/Insurance
+        // POST: api/insurance
         [HttpPost]
-        public void Post([FromBody] string value)
+        public void Create(AddInsuranceCommand newInsurance)
         {
+            var repo = new InsuranceRepository();
+            repo.AddInsurance(newInsurance);
         }
 
-        // PUT: api/Insurance/5
+        // PUT: api/insurance/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public void Update(UpdateInsuranceCommand updatedInsuranceCommand, int id)
         {
+            var repo = new InsuranceRepository();
+            var updatedInsurance = new Insurance
+            {
+                Provider = updatedInsuranceCommand.Provider,
+                TypeId = updatedInsuranceCommand.TypeId,
+            };
+            repo.UpdateInsurance(updatedInsurance, id);
         }
 
-        // DELETE: api/ApiWithActions/5
+        // DELETE: api/insurance/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public void Delete(UpdateInsuranceCommand updatedInsuranceCommand, int id)
         {
+            var repo = new InsuranceRepository();
+            var updatedInsurance = new Insurance
+            {
+                Provider = updatedInsuranceCommand.Provider,
+                TypeId = updatedInsuranceCommand.TypeId,
+            };
+            repo.DeleteInsurance(updatedInsurance, id);
         }
     }
 }
