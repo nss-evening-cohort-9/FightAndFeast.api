@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using FightAndFeast.Models;
 using FightAndFeast.DataAccess;
+using FightAndFeast.Controllers;
+using FightAndFeast.Commands;
 
 namespace FightAndFeast.Controllers
 {
@@ -16,14 +18,15 @@ namespace FightAndFeast.Controllers
         [HttpGet]
         public IEnumerable<InsuranceType> Get()
         {
-            return new string[] { "value1", "value2" };
+            var repo = new InsuranceTypeRepository();
+            return repo.GetAllInsuranceTypes();
         }
-
-        // GET: api/InsuranceType/5
+               
         [HttpGet("{id}")]
-        public string Get(int id)
+        public ActionResult Get(int id)
         {
-            return "value";
+            var repo = new InsuranceTypeRepository();
+            return repo.GetInsuranceType(id);
         }
 
         // POST: api/InsuranceType
