@@ -55,8 +55,20 @@ namespace FightAndFeast.Controllers
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public void DeleteClub(UpdateClubCommand deletedClubCommand, int id)
         {
+            var repo = new ClubRepository();
+
+            var deletedClub = new Club
+            {
+                Name = deletedClubCommand.Name,
+                Address = deletedClubCommand.Address,
+                Phone = deletedClubCommand.Phone,
+                Capacity = deletedClubCommand.Capacity,
+                Description = deletedClubCommand.Description
+            };
+
+            repo.DeleteClub(deletedClub, id);
         }
     }
 }

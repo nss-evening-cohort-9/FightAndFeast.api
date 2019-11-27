@@ -97,5 +97,25 @@ namespace FightAndFeast.DataAccess
                 return connection.Execute(sql, clubToUpdate) == 1;
             }
         }
+
+        public bool DeleteClub(Club clubToDelete, int id)
+        {
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+
+                var sql = @"UPDATE [dbo].[Club]
+	                            SET [Name] = @name
+                                    ,[Address] = @address
+	                                ,[Phone] = null
+	                                ,[Capacity] = null
+	                                ,[Description] = 'Closed'
+	                        WHERE [Id] = @id";
+
+                clubToDelete.Id = id;
+
+                return connection.Execute(sql, clubToDelete) == 1;
+            }
+        }
     }
 }
