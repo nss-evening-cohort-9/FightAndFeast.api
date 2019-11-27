@@ -16,25 +16,25 @@ namespace FightAndFeast.Controllers
     {
         // GET: api/products
         [HttpGet]
-        public IEnumerable<Product> GetProducts()
+        public IEnumerable<Product> GetAll()
         {
             var repo = new ProductRepository();
-            var products = repo.GetAll();
+            var products = repo.GetAllProducts();
             return products;
         }
 
         // GET: api/products/5
-        [HttpGet("{productid}")]
-        public Product GetProduct(int productId)
+        [HttpGet("{productId}")]
+        public Product Get(int productId)
         {
             var repo = new ProductRepository();
-            var product = repo.Get(productId);
+            var product = repo.GetProduct(productId);
             return product;
         }
 
         // POST: api/products/
         [HttpPost]
-        public void AddProduct(AddProductCommand newProduct)
+        public void Create(AddProductCommand newProduct)
         {
             var repo = new ProductRepository();
             repo.AddProduct(newProduct);
@@ -42,7 +42,7 @@ namespace FightAndFeast.Controllers
 
         // PUT: api/products/5
         [HttpPut("{id}")]
-        public void UpdateProduct(UpdateProductCommand updatedProductCommand, int id)
+        public void Update(UpdateProductCommand updatedProductCommand, int id)
 
         {
             var repo = new ProductRepository();
@@ -59,7 +59,7 @@ namespace FightAndFeast.Controllers
 
         // DELETE: api/products/5
         [HttpDelete("{id}")]
-        public void DeleteProduct(UpdateProductCommand updatedProductCommand, int id)
+        public void Delete(UpdateProductCommand updatedProductCommand, int id)
         {
             var repo = new ProductRepository();
             var deletedProduct = new Product
@@ -70,6 +70,6 @@ namespace FightAndFeast.Controllers
                 Description = updatedProductCommand.Description,
             };
             repo.DeleteProduct(deletedProduct, id);
-    }
+        }
     }
 }
