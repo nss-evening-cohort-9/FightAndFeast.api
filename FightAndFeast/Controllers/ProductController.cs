@@ -32,7 +32,7 @@ namespace FightAndFeast.Controllers
             return product;
         }
 
-        // POST: api/products/5
+        // POST: api/products/
         [HttpPost]
         public void AddProduct(AddProductCommand newProduct)
         {
@@ -40,10 +40,7 @@ namespace FightAndFeast.Controllers
             repo.AddProduct(newProduct);
         }
 
-
-
-
-        // Put: api/Products/5
+        // PUT: api/products/5
         [HttpPut("{id}")]
         public void UpdateProduct(UpdateProductCommand updatedProductCommand, int id)
 
@@ -60,13 +57,12 @@ namespace FightAndFeast.Controllers
 
         }
 
-        // DELETE: api//products/5
+        // DELETE: api/products/5
         [HttpDelete("{id}")]
         public void DeleteProduct(UpdateProductCommand updatedProductCommand, int id)
         {
             var repo = new ProductRepository();
             var deletedProduct = new Product
-
             {
                 Name = updatedProductCommand.Name,
                 TypeId = updatedProductCommand.TypeId,
