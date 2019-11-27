@@ -45,11 +45,12 @@ namespace FightAndFeast.DataAccess
             using (var db = new SqlConnection(_connectionString))
             {
 
-                var sql = @"INSERT INTO [dbo].[EmergencyConatct]
+                var sql = @"Insert INTO [EmergencyContact]
                                                  ([FirstName]
                                                   ,[LastName]
                                                   ,[Relationship]
                                                   ,[Phone])
+                                            output inserted.*
                                                VALUES
                                                       (@firstname
                                                        ,@lastname
