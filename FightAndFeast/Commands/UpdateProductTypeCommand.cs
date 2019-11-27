@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FightAndFeast.Models
+namespace FightAndFeast.Commands
 {
-    public class ProductType
+    public class UpdateProductTypeCommand
     {
-        public int Id { get; set; }
         public string Name { get; set; }
     }
 }
