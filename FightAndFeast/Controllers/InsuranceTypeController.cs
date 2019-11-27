@@ -4,16 +4,17 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using FightAndFeast.Models;
+using FightAndFeast.DataAccess;
 
 namespace FightAndFeast.Controllers
 {
     [Route("api/insuranceTypes")]
     [ApiController]
     public class InsuranceTypeController : ControllerBase
-    {
-        // GET: api/InsuranceType
+    {        
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IEnumerable<InsuranceType> Get()
         {
             return new string[] { "value1", "value2" };
         }

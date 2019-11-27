@@ -39,7 +39,9 @@ namespace FightAndFeast.DataAccess
                     InsuranceTypeId = insuranceTypeId
                 };
 
+                var insuranceType = connection.QueryFirst<InsuranceType>(sql, parameters);
 
+                return insuranceType;
             }
         }
     }
