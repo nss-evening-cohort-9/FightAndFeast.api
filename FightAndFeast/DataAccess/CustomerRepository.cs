@@ -18,7 +18,7 @@ namespace FightAndFeast.DataAccess
             using (var db = new SqlConnection(_connectionString))
             {
                 db.Open();
-                var allCustomers = db.Query<Customer>("Select * from Customer");
+                var allCustomers = db.Query<Customer>("Select * from [Customer]");
                 return allCustomers.AsList();
             }
         }
