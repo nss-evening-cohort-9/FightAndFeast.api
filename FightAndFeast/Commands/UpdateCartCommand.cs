@@ -7,5 +7,6 @@ namespace FightAndFeast.Commands
 {
     public class UpdateCartCommand
     {
+        public decimal Total { get; set; }
     }
 }
