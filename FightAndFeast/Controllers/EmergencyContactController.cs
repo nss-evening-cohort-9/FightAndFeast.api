@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FightAndFeast.Commands;
+using FightAndFeast.DataAccess;
+using FightAndFeast.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,36 +14,65 @@ namespace FightAndFeast.Controllers
     [ApiController]
     public class EmergencyContactController : ControllerBase
     {
-        // GET: api/EmergencyContact
+        // GET: api/emergencycontacts
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IEnumerable<EmergencyContact> GetAll()
         {
-            return new string[] { "value1", "value2" };
+            var repo = new EmergencyContactRepository();
+            var emergencycontacts = repo.GetAllEmergencyContacts();
+            return emergencycontacts;
+        }
+       
+
+        // GET: api/emergencycontacts/5
+        [HttpGet("{EmergencyContactId}")]
+        public EmergencyContact Get(int emergencycontactId)
+        {
+            var repo = new EmergencyContactRepository();
+            var emergencycontact = repo.GetEmergencyContact(emergencycontactId);
+            return emergencycontact;
         }
 
-        // GET: api/EmergencyContact/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        // POST: api/EmergencyContact
+        // POST: api/EmergencyContacts/
         [HttpPost]
-        public void Post([FromBody] string value)
+        public void Create(AddEmergencyContactCommand newEmergencyContact)
         {
+            var repo = new EmergencyContactRepository();
+            repo.AddEmergencyContact(newEmergencyContact);
         }
 
-        // PUT: api/EmergencyContact/5
+
+        // PUT: api/EmergencyContacts/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public void Update(UpdateEmergencyContactCommand updatedEmergencyContactCommand, int id)
+
         {
+            var repo = new EmergencyContactRepository();
+            var updatedEmergencyContact = new EmergencyContact
+            {
+                FirstName = updatedEmergencyContactCommand.FirstName,
+                LastName = updatedEmergencyContactCommand.LastName,
+                Relationship = updatedEmergencyContactCommand.Relationship,
+                Phone = updatedEmergencyContactCommand.Phone
+            };
+            repo.UpdateEmergencyContact(updatedEmergencyContact, id);
+
         }
+
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public void Delete(UpdateEmergencyContactCommand updatedEmergencyContactCommand, int id)
         {
+            var repo = new EmergencyContactRepository();
+            var deletedEmergencyContact = new EmergencyContact
+            {
+                FirstName = updatedEmergencyContactCommand.FirstName,
+                LastName = updatedEmergencyContactCommand.LastName,
+                Relationship = updatedEmergencyContactCommand.Relationship,
+                Phone = updatedEmergencyContactCommand.Phone,
+            };
+            repo.DeleteEmergencyContact(deletedEmergencyContact, id);
         }
     }
 }
