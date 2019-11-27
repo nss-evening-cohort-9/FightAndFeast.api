@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 
 namespace FightAndFeast.Commands
 {
-    public class UpdateCartCommand
+    public class UpdateProductTypeCommand
     {
-        public decimal Total { get; set; }
+        public string Name { get; set; }
     }
 }

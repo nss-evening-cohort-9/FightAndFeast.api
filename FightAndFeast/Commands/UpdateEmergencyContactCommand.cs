@@ -12,4 +12,6 @@ namespace FightAndFeast.Commands
         public string Relationship { get; set; }
         public string Phone { get; set; }
     }
+
 }
+
