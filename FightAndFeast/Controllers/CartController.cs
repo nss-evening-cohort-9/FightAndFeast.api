@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FightAndFeast.Commands;
+using FightAndFeast.DataAccess;
+using FightAndFeast.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,36 +14,48 @@ namespace FightAndFeast.Controllers
     [ApiController]
     public class CartController : ControllerBase
     {
-        // GET: api/Cart
+        // GET: api/carts
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IEnumerable<Cart> GetAll()
         {
-            return new string[] { "value1", "value2" };
+            var repo = new CartRepository();
+            return repo.GetAllCarts();
         }
 
-        // GET: api/Cart/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        // GET: api/carts/1
+        [HttpGet("{cartId}")]
+        public Cart Get(int cartId)
         {
-            return "value";
+            var repo = new CartRepository();
+            return repo.GetCart(cartId);
         }
 
-        // POST: api/Cart
+        // POST: api/carts
         [HttpPost]
-        public void Post([FromBody] string value)
+        public void Create(AddCartCommand newCart)
         {
+            var repo = new CartRepository();
+            repo.AddCart(newCart);
         }
 
-        // PUT: api/Cart/5
+        // DELETE: api/carts/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public void Update(UpdateCartCommand updatedCartCommand, int id)
         {
+            var repo = new CartRepository();
+            var updatedCart = new Cart
+            {
+                Total = updatedCartCommand.Total,
+            };
+            repo.UpdateCart(updatedCart, id);
         }
 
-        // DELETE: api/ApiWithActions/5
+        // DELETE: api/carts/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public void Delete(Cart cartToDelete, int id)
         {
+            var repo = new CartRepository();
+            repo.DeleteCart(cartToDelete, id);
         }
     }
 }
