@@ -7,5 +7,6 @@ namespace FightAndFeast.Commands
 {
     public class UpdateInsuranceTypeCommand
     {
+        public string Name { get; set; }
     }
 }

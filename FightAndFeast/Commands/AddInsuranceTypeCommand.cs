@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 namespace FightAndFeast.Commands
 {
     public class AddInsuranceTypeCommand
-    {
+    {        
+        public string Name { get; set; }
     }
 }
