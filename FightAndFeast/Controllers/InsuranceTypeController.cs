@@ -23,28 +23,43 @@ namespace FightAndFeast.Controllers
         }
                
         [HttpGet("{id}")]
-        public ActionResult Get(int id)
+        public ActionResult<InsuranceType> Get(int id)
         {
             var repo = new InsuranceTypeRepository();
             return repo.GetInsuranceType(id);
         }
-
-        // POST: api/InsuranceType
+                
         [HttpPost]
-        public void Post([FromBody] string value)
+        public void AddNewInsuranceType(AddInsuranceTypeCommand newInsuranceType)
         {
+            var repo = new InsuranceTypeRepository();
+            repo.AddInsuranceType(newInsuranceType);
         }
-
-        // PUT: api/InsuranceType/5
+                
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public void UpdateInsuranceType(UpdateInsuranceTypeCommand updatedInsuranceTypeCommand, int id)
         {
-        }
+            var repo = new InsuranceTypeRepository();
 
-        // DELETE: api/ApiWithActions/5
+            var updatedInsuranceType = new InsuranceType
+            {
+                Name = updatedInsuranceTypeCommand.Name
+            };
+
+            repo.UpdateInsuranceType(updatedInsuranceType, id);
+        }
+                
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public void DeleteInsuranceType(UpdateInsuranceTypeCommand deletedInsuranceTypeCommand, int id)
         {
+            var repo = new InsuranceTypeRepository();
+
+            var deletedInsuranceType = new InsuranceType
+            {
+                Name = deletedInsuranceTypeCommand.Name
+            };
+
+            repo.DeleteInsuranceType(deletedInsuranceType, id);
         }
     }
 }
