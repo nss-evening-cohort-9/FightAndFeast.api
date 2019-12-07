@@ -7,11 +7,11 @@ namespace FightAndFeast.Commands
 {
     public class UpdateProductCommand
     {
-              public string Name { get; set; }
-              public int TypeId { get; set; }
-              public decimal Price { get; set; }
-              public string Description { get; set; }
-
+        public string Name { get; set; }
+        public int TypeId { get; set; }
+        public decimal Price { get; set; }
+        public string Description { get; set; }
+        public DateTime EventDate { get; set; }
     }
 }
 
