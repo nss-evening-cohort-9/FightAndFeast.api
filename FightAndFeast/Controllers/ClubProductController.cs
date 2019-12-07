@@ -15,13 +15,6 @@ namespace FightAndFeast.Controllers
     [ApiController]
     public class ClubProductController : ControllerBase
     {
-        //readonly ClubProductRepository _repo;
-
-        //public ClubProductController()
-        //{
-        //    _repo = new ClubProductRepository();
-        //}
-
         // GET: api/clubProducts
         [HttpGet]
         public IEnumerable<ClubProductDto> GetAll()
