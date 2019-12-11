@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FightAndFeast.Commands;
+using FightAndFeast.DataAccess;
+using FightAndFeast.Dtos;
+using FightAndFeast.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,36 +15,63 @@ namespace FightAndFeast.Controllers
     [ApiController]
     public class ClubProductController : ControllerBase
     {
-        // GET: api/ClubProduct
+        // GET: api/clubProducts
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IEnumerable<ClubProductDto> GetAll()
         {
-            return new string[] { "value1", "value2" };
+            var repo = new ClubProductRepository();
+            return repo.GetAllClubProducts();
         }
 
-        // GET: api/ClubProduct/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        // GET: api/clubProducts/1
+        [HttpGet("{clubProductId}")]
+        public ClubProductDto Get(int clubProductId)
         {
-            return "value";
+            var repo = new ClubProductRepository();
+            return repo.GetClubProduct(clubProductId);
         }
 
-        // POST: api/ClubProduct
+        // GET: api/clubProducts/recent/
+        [HttpGet("recent")]
+        public IEnumerable<ClubProductDto> GetRecent()
+        {
+            var repo = new ClubProductRepository();
+            var products = repo.GetRecentClubProducts();
+            return products;
+        }
+
+        // POST: api/clubProducts
         [HttpPost]
-        public void Post([FromBody] string value)
+        public void Create(AddClubProductCommand newClubProduct)
         {
+            var repo = new ClubProductRepository();
+            repo.AddClubProduct(newClubProduct);
         }
 
-        // PUT: api/ClubProduct/5
+        // PUT: api/clubProducts/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public void Update(UpdateClubProductCommand updatedClubProductCommand, int id)
         {
+            var repo = new ClubProductRepository();
+            var updatedClubProduct = new ClubProduct
+            {
+                ClubId = updatedClubProductCommand.ClubId,
+                ProductId = updatedClubProductCommand.ProductId,
+            };
+            repo.UpdateClubProduct(updatedClubProduct, id);
         }
 
-        // DELETE: api/ApiWithActions/5
+        // DELETE: api/clubProducts/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public void Delete(UpdateClubProductCommand updatedClubProductCommand, int id)
         {
+            var repo = new ClubProductRepository();
+            var updatedClubProduct = new ClubProduct
+            {
+                ClubId = updatedClubProductCommand.ClubId,
+                ProductId = updatedClubProductCommand.ProductId,
+            };
+            repo.DeleteClubProduct(updatedClubProduct, id);
         }
     }
 }

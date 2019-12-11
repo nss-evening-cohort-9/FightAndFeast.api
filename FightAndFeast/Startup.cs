@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
+using FightAndFeast.DataAccess;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -66,8 +68,10 @@ namespace FightAndFeast
 
             app.UseCors("MyPolicy");
             app.UseAuthentication();
+
             app.UseHttpsRedirection();
             app.UseMvc();
+
         }
     }
 }
