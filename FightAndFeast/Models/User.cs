@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FightAndFeast.Commands
+namespace FightAndFeast.Models
 {
-    public class AddSellerCommand
+    public class User
     {
-        public string Name { get; set; }
-        public DateTime DateCreated { get; set; }
+        public int Id { get; set; }
         public string Email { get; set; }
         public string FirebaseUid { get; set; }
     }

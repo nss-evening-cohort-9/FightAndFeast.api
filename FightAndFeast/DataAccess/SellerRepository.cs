@@ -46,29 +46,24 @@ namespace FightAndFeast.DataAccess
             }
         }
 
-        public bool AddSeller(AddSellerCommand newSeller)
+        public Seller AddSeller(AddSellerCommand newSeller)
         {
             using (var connection = new SqlConnection(_connectionString))
             {
                 connection.Open();
 
-                var addSeller = @"INSERT INTO [dbo].[Seller]
+                var sql = @"INSERT INTO [dbo].[Seller]
 	                                ([Name]
-	                                ,[DateCreated])
+	                                ,[DateCreated]
+                                    ,[Email])
                                  output inserted.*
                                  VALUES
 	                                (@name
-                                    ,@date)";
+                                    ,@date
+                                    ,@email)";              
+               
 
-                var parameters = new
-                {
-                    name = newSeller.Name,
-                    date = DateTime.Now
-
-                };
-
-                var rowsAffected = connection.Execute(addSeller, parameters);
-                return rowsAffected == 1;
+            return connection.QueryFirst<Seller>(sql, newSeller);
             }
         }
 
