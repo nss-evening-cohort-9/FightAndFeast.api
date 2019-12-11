@@ -51,7 +51,8 @@ namespace FightAndFeast.Controllers
                 Name = updatedProductCommand.Name,
                 TypeId = updatedProductCommand.TypeId,
                 Price = updatedProductCommand.Price,
-                Description = updatedProductCommand.Description
+                Description = updatedProductCommand.Description,
+                EventDate = updatedProductCommand.EventDate
             };
             repo.UpdateProduct(updatedProduct, id);
 
@@ -68,6 +69,7 @@ namespace FightAndFeast.Controllers
                 TypeId = updatedProductCommand.TypeId,
                 Price = updatedProductCommand.Price,
                 Description = updatedProductCommand.Description,
+                EventDate = updatedProductCommand.EventDate
             };
             repo.DeleteProduct(deletedProduct, id);
         }

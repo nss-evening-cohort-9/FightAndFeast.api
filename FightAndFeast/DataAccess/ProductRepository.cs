@@ -12,6 +12,7 @@ namespace FightAndFeast.DataAccess
     public class ProductRepository
     {
         string _connectionString = "Server=localhost;Database=FightandFeast;Trusted_Connection=True;";
+
         public IEnumerable<Product> GetAllProducts()
         {
             using (var db = new SqlConnection(_connectionString))
@@ -47,13 +48,19 @@ namespace FightAndFeast.DataAccess
             {
                 var sql = @"Insert INTO [Product]
                                            ([Name]
+                                            ,[TypeId]
                                             ,[Price]
-                                            ,[Description])
+                                            ,[Description]
+                                            ,[DateCreated]
+                                            ,[EventDate])
                                           output inserted.*
                                           VALUES
-                                                  (@name
-                                                   ,@price
-                                                   ,@description)";
+                                            (@name
+                                            ,@typeId
+                                            ,@price
+                                            ,@description
+                                            ,@dateCreated
+                                            ,@eventdate)";
 
                 return db.Execute(sql, newProduct) == 1;
             }
@@ -67,9 +74,10 @@ namespace FightAndFeast.DataAccess
 
                 var sql = @"UPDATE[dbo].[Product]
                                    SET [Name]= null
-                                        ,[TypeId] = null  
+                                       ,[TypeId] = null  
                                        ,[Price] = null 
                                        ,[Description] = null
+                                       ,[EventDate] = null
                                        WHERE [Id] = @id";
                 productToDelete.Id = id;
 
@@ -86,14 +94,14 @@ namespace FightAndFeast.DataAccess
                 var sql = @"update [dbo].[Product]
                                     SET [Name] = @name,
                                         [TypeId] = @typeid,
-                                        [Price] = @Price,
-                                        [Description] = @description
+                                        [Price] = @price,
+                                        [Description] = @description,
+                                        [EventDate] = @eventDate
                                WHERE [id] = @id";
 
                 ProductToUpdate.Id = id;
 
                 return connection.Execute(sql, ProductToUpdate) == 1;
-
             }
         }
     }
