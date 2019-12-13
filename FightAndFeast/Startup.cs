@@ -29,6 +29,9 @@ namespace FightAndFeast
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var authSettings = Configuration.GetSection("AuthenticationSettings");
+            var connectionString = Configuration.GetValue<string>("ConnectionString");
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddCors(options => options.AddPolicy("MyPolicy", builder =>
             {
@@ -40,17 +43,19 @@ namespace FightAndFeast
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
                 {
                     options.IncludeErrorDetails = true;
-                    options.Authority = "https://securetoken.google.com/fight-and-feast";
+                    options.Authority = authSettings["Authority"];
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuer = true,
-                        ValidIssuer = "https://securetoken.google.com/fight-and-feast",
+                        ValidIssuer = authSettings["Issuer"],
                         ValidateAudience = true,
-                        ValidAudience = "fight-and-feast",
+                        ValidAudience = authSettings["Audience"],
                         ValidateLifetime = true
                     };
                 }
             );
+
+            services.AddTransient<SqlConnection>(provider => new SqlConnection(connectionString));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
