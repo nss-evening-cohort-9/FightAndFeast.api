@@ -16,5 +16,6 @@ namespace FightAndFeast.Dtos
         public string ProductDescription { get; set; }
         public DateTime DateCreated { get; set; }
         public DateTime EventDate { get; set; }
+        public int TypeId { get; set; }
     }
 }
