@@ -7,11 +7,12 @@ using Microsoft.AspNetCore.Mvc;
 using FightAndFeast.DataAccess;
 using FightAndFeast.Models;
 using FightAndFeast.Commands;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FightAndFeast.Controllers
 {
     [Route("api/products")]
-    [ApiController]
+    [ApiController, Authorize]
     public class ProductController : ControllerBase
     {
         // GET: api/products
