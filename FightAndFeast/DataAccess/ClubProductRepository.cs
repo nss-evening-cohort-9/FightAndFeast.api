@@ -32,7 +32,7 @@ namespace FightAndFeast.DataAccess
                                                             FROM 
 	                                                            [ClubProduct] cp
 	                                                            JOIN [Club] c ON c.Id = cp.ClubId
-	                                                            JOIN [Product] p ON p.Id = cp.ClubId
+	                                                            JOIN [Product] p ON p.Id = cp.ProductId
                                                             ORDER BY 
 	                                                            cp.Id");
                 return allClubProducts.AsList();

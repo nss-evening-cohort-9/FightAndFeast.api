@@ -45,8 +45,8 @@ GO
 
 CREATE TABLE [Club] (
   [Id] INT PRIMARY KEY IDENTITY(1, 1),
-  [Name] NVARCHAR(50),
-  [Address] NVARCHAR(50),
+  [Name] NVARCHAR(255),
+  [Address] NVARCHAR(255),
   [Phone] NVARCHAR(50),
   [Capacity] INT,
   [Description] NVARCHAR(500)
@@ -55,7 +55,7 @@ GO
 
 CREATE TABLE [Product] (
   [Id] INT PRIMARY KEY IDENTITY(1, 1),
-  [Name] NVARCHAR(50),
+  [Name] NVARCHAR(255),
   [TypeId] INT,
   [Price] MONEY,
   [Description] NVARCHAR(500),
