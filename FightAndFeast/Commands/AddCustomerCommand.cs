@@ -13,6 +13,7 @@ namespace FightAndFeast.Commands
         public bool HasFought { get; set; } = false;
         public string Email { get; set; }
         public string Phone { get; set; }
+        public string FirebaseUid { get; set; }
         //public int CartId { get; set; }
     }
 }
