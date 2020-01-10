@@ -15,5 +15,6 @@ namespace FightAndFeast.Models
         public string Email { get; set; }
         public string Phone { get; set; }
         public int CartId { get; set; }
+        public int FirebaseUid { get; set; }
     }
 }

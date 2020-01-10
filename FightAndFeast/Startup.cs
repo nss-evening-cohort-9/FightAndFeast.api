@@ -29,6 +29,9 @@ namespace FightAndFeast
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var authSettings = Configuration.GetSection("AuthenticationSettings");
+            var connectionString = Configuration.GetValue<string>("ConnectionString");
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddCors(options => options.AddPolicy("MyPolicy", builder =>
             {
@@ -36,6 +39,23 @@ namespace FightAndFeast
                        .AllowAnyMethod()
                        .AllowAnyHeader();
             }));
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+                {
+                    options.IncludeErrorDetails = true;
+                    options.Authority = authSettings["Authority"];
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidIssuer = authSettings["Issuer"],
+                        ValidateAudience = true,
+                        ValidAudience = authSettings["Audience"],
+                        ValidateLifetime = true
+                    };
+                }
+            );
+
+            services.AddTransient<SqlConnection>(provider => new SqlConnection(connectionString));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -52,6 +72,7 @@ namespace FightAndFeast
             }
 
             app.UseCors("MyPolicy");
+            app.UseAuthentication();
 
             app.UseHttpsRedirection();
             app.UseMvc();
