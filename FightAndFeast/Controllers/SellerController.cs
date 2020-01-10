@@ -12,7 +12,7 @@ namespace FightAndFeast.Controllers
 {
     [Route("api/sellers")]
     [ApiController]
-    public class SellerController : ControllerBase
+    public class SellerController : FirebaseEnabledController
     {       
         [HttpGet]
         public IEnumerable<Seller> GetSellers()
@@ -30,10 +30,11 @@ namespace FightAndFeast.Controllers
         }
         
         [HttpPost]
-        public void AddSeller(AddSellerCommand newSeller)
+        public IActionResult AddSeller(AddSellerCommand newSeller)
         {
             var repo = new SellerRepository();
-            repo.AddSeller(newSeller);
+            newSeller.FirebaseUid = UserId;
+            return Ok(repo.AddSeller(newSeller));
         }
         
         [HttpPut("{id}")]

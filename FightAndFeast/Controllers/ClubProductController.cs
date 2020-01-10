@@ -8,11 +8,12 @@ using FightAndFeast.Dtos;
 using FightAndFeast.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FightAndFeast.Controllers
 {
     [Route("api/clubProducts")]
-    [ApiController]
+    [ApiController, Authorize]
     public class ClubProductController : ControllerBase
     {
         // GET: api/clubProducts

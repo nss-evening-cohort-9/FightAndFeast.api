@@ -39,26 +39,27 @@ namespace FightAndFeast.DataAccess
             }
         }
 
-        public bool AddCustomer(AddCustomerCommand newCustomer)
+        public Customer AddCustomer(AddCustomerCommand newCustomer)
         {
             using (var db = new SqlConnection(_connectionString))
             {
                 var sql = @"INSERT INTO [dbo].[Customer]
-                                       ([FirstName]
-                                       ,[LastName]
-                                       ,[DateCreated]
-                                       ,[HasFought]
-                                       ,[Email]
-                                       ,[Phone])
-                                 VALUES
-                                       (@firstName
-                                       ,@lastName
-                                       ,@dateCreated
-                                       ,@hasFought
-                                       ,@email
-                                       ,@phone)";
+                                ([FirstName]
+                                ,[LastName]
+                                ,[DateCreated]
+                                ,[HasFought]
+                                ,[Email]
+                                ,[Phone])
+                            output inserted.*
+                            VALUES
+                                (@firstName
+                                ,@lastName
+                                ,@dateCreated
+                                ,@hasFought
+                                ,@email
+                                ,@phone)";
                 
-                return db.Execute(sql, newCustomer) == 1;
+                return db.QueryFirst<Customer>(sql, newCustomer);
             }
         }
 

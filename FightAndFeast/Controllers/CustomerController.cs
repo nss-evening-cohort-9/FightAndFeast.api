@@ -12,7 +12,7 @@ namespace FightAndFeast.Controllers
 {
     [Route("api/customers")]
     [ApiController]
-    public class CustomerController : ControllerBase
+    public class CustomerController : FirebaseEnabledController
     {
         // GET: api/customers
         [HttpGet]
@@ -32,10 +32,11 @@ namespace FightAndFeast.Controllers
 
         // POST: api/customers
         [HttpPost]
-        public void Create(AddCustomerCommand newCustomer)
+        public IActionResult Create(AddCustomerCommand newCustomer)
         {
             var repo = new CustomerRepository();
-            repo.AddCustomer(newCustomer);
+            newCustomer.FirebaseUid = UserId;
+            return Ok(repo.AddCustomer(newCustomer));
         }
 
         // DELETE: api/customers/5
