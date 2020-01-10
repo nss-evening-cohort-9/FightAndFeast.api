@@ -28,7 +28,9 @@ namespace FightAndFeast.DataAccess
 	                                                            p.Price,
 	                                                            p.Description AS ProductDescription,
                                                                 p.DateCreated,
-                                                                p.EventDate
+                                                                p.EventDate,
+                                                                p.TypeId
+
                                                             FROM 
 	                                                            [ClubProduct] cp
 	                                                            JOIN [Club] c ON c.Id = cp.ClubId
@@ -52,7 +54,9 @@ namespace FightAndFeast.DataAccess
 	                            p.Price,
 	                            p.Description AS productDescription,
                                 p.DateCreated,
-                                p.EventDate
+                                p.EventDate,
+                                p.TypeId
+                                
                             FROM 
 	                            [ClubProduct] cp
 	                            JOIN [Club] c ON c.Id = cp.ClubId
@@ -81,7 +85,8 @@ namespace FightAndFeast.DataAccess
 	                                                            p.Price,
 	                                                            p.Description AS ProductDescription,
                                                                 p.DateCreated,
-                                                                p.EventDate
+                                                                p.EventDate,
+                                                                p.TypeId
                                                             FROM 
 	                                                            [ClubProduct] cp
 	                                                            JOIN [Club] c ON c.Id = cp.ClubId
